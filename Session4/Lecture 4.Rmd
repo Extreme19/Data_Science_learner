@@ -1,0 +1,120 @@
+---
+title: "Lecture 4"
+author: "Joshua Matthew(SCV2021)"
+date: "24/10/2019"
+output: pdf_document
+---
+import the diamond data
+```{r}
+dmd<- read.csv("data/diamond.csv", header = T, dec = '.', sep = ',')
+```
+libraries that are needed
+```{r}
+library(tidyverse)
+library(readr)
+library(readxl)
+library(ggplot2)
+```
+using ggplot2 on mbta data
+```{r}
+New_dta<-read_excel("data/mbta.xlsx", skip = 1, range =  cell_cols(2:60))
+```
+a peek into the diamond data
+```{r}
+glimpse(dmd)
+```
+
+plot carat and price; aes is the aestethics.
+
+```{r}
+ggplot(dmd, aes(x = carat, y = price))
+```
+adding the the geom functions (point,bar, boxplot,jitter)
+```{r}
+ggplot(dmd, aes(x = carat, y = price))+geom_point()
+```
+gathering the year into a column against passengers
+```{r}
+gathered_New_dta<- New_dta%>%gather(`2007-01`: `2011-10`, key = 'Year', value = 'Passengers')
+View(gathered_New_dta)
+```
+
+
+
+```{r}
+tidy_mbta<-gathered_New_dta%>%separate(Year, into = c("Year", "Month"))
+View(tidy_mbta)
+```
+
+
+```{r}
+filtered_New_dta<- filter(tidy_mbta ,mode %in% c("Commuter Rail", "Heavy Rail", "Light Rail", "Private Bus"))
+View(filtered_New_dta)
+```
+
+
+convert data to factor(fct), numeric and any form
+```{r}
+glimpse(filtered_New_dta)
+```
+converting the reference to mode, year, month and passengers into factor in order to suit ggplot...factors are more repititive and numeric is discrete.
+
+```{r}
+filtered_New_dta$mode<- as.factor(filtered_New_dta$mode)
+filtered_New_dta$Year<- as.factor(filtered_New_dta$Year)
+filtered_New_dta$Passengers<- as.numeric(filtered_New_dta$Passengers)
+filtered_New_dta$Month<- as.factor(filtered_New_dta$Month)
+```
+
+
+
+```{r}
+glimpse(filtered_New_dta)
+```
+
+using ggplot to view the filtered_New_dta data of passengers against Year and colour it based on mode or month (factor /categorical type)
+
+```{r}
+filtered_plot<-ggplot(filtered_New_dta,aes(x = Year, y =Passengers)) + geom_point(aes(color =mode))
+```
+
+
+```{r}
+p1<-filtered_plot+labs(title = "Passengers against Year", x= "Year dah dah dah", y = "Passengers")
+```
+
+```{r}
+p1
+```
+
+```{r}
+diamonds<-ggplot(dmd, aes(x = carat, y = price))
+diamonds+ geom_point(aes(colour = color, shape= cut, size = 0.6))+labs(title = "Price against carat", x= "Carat", y= "Price")
+```
+
+```{r}
+diamondsPlot<-diamonds+ geom_point(aes(colour = color, shape= cut, size = 0.6))+labs(title = "Price against carat", x= "Carat", y= "Price")+
+  scale_x_continuous(limits = c(0,4), breaks = seq(0,4, by= 0.5))+
+  scale_y_continuous(limits = c(0,1600), breaks = seq(0,1600, by = 2000))
+suppressWarnings(print(diamondsPlot))
+
+```
+
+```{r}
+
+```
+```{r}
+
+```
+```{r}
+
+```
+```{r}
+
+```
+
+```{r}
+
+```
+
+

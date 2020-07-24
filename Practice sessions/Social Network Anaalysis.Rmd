@@ -1,0 +1,201 @@
+---
+title: "LinkedIn"
+author: "Joshua Matthew(COO-Project support)"
+date: "23/07/2020"
+output: pdf_document
+---
+install package igraph, SNA and import them
+```{r}
+library(igraph)
+library(sna)
+```
+
+read in a 2 by 6 dataset and make the dir your working directory
+```{r}
+setwd("")
+getwd()
+#assign the data to a variable and view
+g1<-read.table('data.txt')
+graph1<- graph_from_data_frame(g1, directed = FALSE, vertices = NULL)
+plot(graph1)
+```
+
+using the inbuilt igraph data
+```{r}
+g_full<- make_full_graph(18, directed = F)
+plot(g_full)
+```
+a non-directed ring graph with 12 items
+
+```{r}
+g_ring<- make_ring(12, directed = F, mutual = F, circular = T)
+plot(g_ring)
+```
+
+a directed star graph of 10 items with 1 as its center
+```{r}
+g_star<- make_star(10, center= 1)
+plot(g_star)
+```
+
+gnp graph of probability 0.3
+```{r}
+g_gnp<- sample_gnp(20,0.3, directed = F, loops = F)
+plot(g_gnp)
+```
+
+gnm graph with 50 edges
+```{r}
+g_gnm<- sample_gnm(20,25, directed = F, loops = F)
+plot(g_gnm)
+```
+
+
+gpa graph, power is how much weight to give to the edges/connections. 1 is equal
+```{r}
+g_gpa<- sample_pa(20,power = 1)
+plot(g_gpa)
+```
+
+```{r}
+g1<- sample_pa(12,power = 1, directed = F)
+plot(g1)
+#degree shows the number of connections each node of the graph has
+degree(g1)
+```
+betweeness, to know the most relevant node in the network of nodes
+```{r}
+g1<- sample_pa(20,power = 1, directed = F)
+plot(g1)
+# shows the relevance of each node of the graph.i.e the frequency of a node being on the shortest path between nodes/vertices
+betweenness(g1)
+```
+
+network density= no_ of connections / no_ of possible connections.
+preferential attachement pa, always have the same density score.
+```{r}
+g1<- sample_pa(12, power = 1, directed= F)
+plot(g1)
+
+ed<- edge_density(g1, loops = F)
+ed #2/12 = 0.166667
+```
+
+
+```{r}
+g1<- sample_pa(20, power = 1, directed= F)
+plot(g1)
+
+ed<- edge_density(g1, loops = F)
+ed #2/20= 0.1
+
+```
+
+
+```{r}
+g1<- sample_pa(40, power = 1, directed= F)
+plot(g1)
+
+ed<- edge_density(g1, loops = F)
+ed #2/40 = 0.05
+
+```
+
+use a gnp method and calculate the edge density
+```{r}
+gnp<- sample_gnp(20, 0.3, directed= F, loops = F)
+plot(gnp)
+
+ed<- edge_density(gnp, loops = F)
+ed
+```
+
+analyzing clique= group of vertices where all possible links/edges are present
+loops= F, disallow the two links btw a pair of vertices i.e reciprocal link such as 1 to 2 and 2 to 1.
+```{r}
+gnp<- sample_gnp(20, 0.3, directed = F, loops = F)
+plot(gnp)
+clique_num(gnp) #checks the largest clique
+#cliques(gnp, min = 4)
+```
+
+viewing components/groups of connected nodes within a graph
+```{r}
+gnp<- sample_gnp(20, 0.08, directed = F, loops = F)
+plot(gnp)
+components(gnp) #returns membership(the group that each index belongs to), the corresponding sizes and number of components. this can be used to determine who talks to whom and how employees are connected via emails
+```
+
+random walk.
+using the gnp algorithm,probability of a link between any two nodes should be 0.08.
+random walk from vertice 26, in steps of 8 and when stuck return the path it completed before getting stuck
+```{r}
+g1<- sample_gnp(30, 0.08, directed = F, loops = F)
+plot(g1)
+random_walk(g1, 26, 8,stuck = "return") #walked path left-right
+```
+
+Visualization with igraph
+```{r}
+g1<- sample_gnp(30, 0.1)
+plot(g1)
+
+```
+
+default colors
+```{r}
+g1<- sample_gnp(30, 0.08)
+plot(g1)# orange vertices and grey edges/links
+```
+
+Customized colors
+```{r}
+g1<- sample_gnp(30, 0.08) %>%
+  set_vertex_attr("color", value = "yellow") %>%
+  set_edge_attr("color", value = "green")
+plot(g1)
+```
+
+
+Saving a graph into pdf:
+create the graph
+```{r}
+g1<- sample_gnp(30, 0.08, directed = F)
+#tplot(g1)
+```
+
+set the working directory
+```{r}
+setwd("C:/SEMICOLON/EXTREME R/Practice sessions")
+```
+verify directory
+```{r}
+getwd()
+```
+save the graph as an edgelist
+```{r}
+write.graph(g1, file = 'random_network.txt', format = "edgelist")
+```
+
+save as a pdf file
+first create a pdf file to write into
+```{r}
+pdf("rand_network.pdf")
+```
+
+write on the opened pdf file and close it
+```{r}
+plot(g1)
+dev.off() #closes the opened pdf file
+```
+read up:
+Social network analysis by john scott(sage)
+Social network analysis with Pajek by Wouter de Nooy, Andrej Mrvar, Vladirmir Batagelj
+watch: Up and running with R by Barton Poulson(Lynda.com)
+download packages:
+pajek; http://mrvar.fdv.uni-lj.si/pajek
+gephi; https://gephi.org/users/download
+
+```{r}
+
+```

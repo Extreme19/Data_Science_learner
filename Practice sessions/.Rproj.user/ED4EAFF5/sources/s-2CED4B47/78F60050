@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1580340094430.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "78F60050",
+    "lastKnownWriteTime" : 1571304779,
+    "last_content_update" : 1571304779,
+    "path" : "C:/SEMICOLON/EXTREME R/Session2/Lecture 2.Rmd",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "76,3",
+        "scrollLine" : "56"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

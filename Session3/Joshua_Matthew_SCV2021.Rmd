@@ -1,0 +1,77 @@
+---
+title: "Test"
+author: "Joshua Matthew(SCV2021)"
+date: "18/10/2019"
+output: html_document
+---
+
+
+
+
+
+Q1; Write R program to create a matrix taking a given vector of numbers as input. Display the matrix.
+```{r}
+matrix1<-matrix(1:20, nrow = 5, ncol = 4)
+matrix1
+```
+
+Q2: Write R program to create “two” 2x3 matrix and add, subtract, multiply the matrices. 
+```{r}
+matrixA<- matrix(5:10, nrow = 2, ncol = 3)
+matrixB<- matrix(3:8, nrow =  2, ncol = 3)
+matrixAdd<- matrixA + matrixB
+matrixSubtract<- matrixA- matrixB
+matrixMultiply<- matrixA * matrixB
+
+matrixAdd
+matrixSubtract
+matrixMultiply
+```
+
+Q3: Write R program to access the element at 3rd column and 2nd row of a given matrix.
+```{r}
+#from matrixA
+
+matrixA[2,3]
+```
+Q4: Write R program to create vector of numeric, complex, logical and character types of length 6
+
+```{r}
+R_numeric<- c(1:6)
+R_Logical<- c(FALSE,TRUE,TRUE,TRUE,FALSE,TRUE)
+R_Character<- c('a','b','c','d','e','f')
+R_Complex<- c('a',1,'e',FALSE,4,TRUE)
+R_Complex
+R_Character
+R_Logical
+R_numeric
+```
+
+
+Q5: Write R program to multiply two vectors of integer type of length 3
+```{r}
+vector1<- c(2,3,5)
+vector2<- c(5,2,9)
+multiplyVectors<- vector1 * vector2
+multiplyVectors
+```
+
+Q6:  Load the Tumor data set into R using the read.table() function.
+
+```{r}
+tumor<- read.table("data/tumor.txt", header = TRUE, sep = "\t")
+view(tumor)
+```
+
+Q7: Using the data in Q6, Plot the scatter plot of the variables “time”  and “futime “, with "time" on the y-axis and "futime" on the x-axis.  Format your plot by putting title on the plot.
+```{r}
+plotTumor<- plot(tumor$futime,tumor$time, main = "plot of futime against time", xlab = "time", ylab = "futime")
+plotTumor
+```
+
+Q8: Using the data in Q6, Carry out histogram plot of the “time” variable and Title you plot
+```{r}
+
+histplotTumor<- hist(tumor$time, main = "Histogram plot of time")
+histplotTumor
+```

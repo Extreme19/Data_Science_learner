@@ -1,0 +1,266 @@
+---
+title: "Practice 01"
+author: "Joshua Matthew(SCV2021)"
+date: "10/01/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+
+lets work on a dataset and its visualizAtion
+
+```{r}
+library(datasets)
+head(iris)
+
+```
+using the plot command for visualization
+```{r}
+#glimpse(iris)
+#plot(iris$Species)
+#plot(iris$Species, iris$Petal.Width) 
+#plot(iris$Petal.Length, iris$Petal.Width)
+#plot(iris)
+#plot(iris$Petal.Length, iris$Petal.Width, #X and Y axis
+#     col= "#cc0001", #for colour
+#     pch =  19, # which is the weight of the plot's point character
+#     main = "Iris: Petal Length vs. Petal Width", #the main header
+#     xlab = "Petal length", # the x axis label
+#     ylab = "Petal Width" # the y-axis label
+#     )
+#plot(cos, 0, 2*pi)#plotting a cosine function graph
+#plot(exp, 1,5) #plotting an exponential function graph distribution from 1 - 5
+#plot(dnorm, -3, +3, #density of a normal distribution from -3 to +3
+ #    col = "#cc0001",
+  #   lwd = 5, #line width
+  #   main = "density norm plot decorated",
+  #   xlab= "distribution",
+  #   ylab = "density norm")
+
+
+```
+
+bar chart
+
+```{r}
+#library(datasets)
+#head(mtcars)
+#barplot(mtcars$cyl) #which gives of undesired results as the data is still raw
+#cylinders<- table(mtcars$cyl) #create a table and assign the cylinder data to it.
+#barplot(cylinders)
+#View(cylinders)
+#plot(cylinders) #gives  a normal plot for tabularized cylinders
+```
+
+Histogram used for quantitative, scaled, measured,interval or ratio level data.
+look out for the shape, gaps, outliers and symmetry
+
+```{r}
+#hist(iris$Sepal.Length)
+#hist(iris$Sepal.Width)
+#hist(iris$Petal.Length)
+#hist(iris$Petal.Width)
+```
+to plot histogram by group
+
+```{r}
+par(mfrow = c(3,1)) #putting the 3 plots into 3 rows 1 column
+
+#for setosa iris data plot
+
+hist(iris$Petal.Width[iris$Species == "setosa"], #which is a selector which will use only the equivalence of "setosa" specie
+     xlim = c(0,3),
+     breaks = 9, #suggests number of bars for the histogram
+     main = "Petal width for setosa",
+     xlab = "",
+     col = "red")
+
+
+#for versicolor iris data plot
+
+hist(iris$Petal.Width[iris$Species == "versicolor"],
+     xlim = c(0,3),
+     breaks = 9,
+     main = "Petal width for Versicolor",
+     xlab = "Versicolor",
+     col = "blue")
+
+#for virginica's iris data plot
+
+hist(iris$Petal.Width[iris$Species == "virginica"], #[] where species == is equivalent to...
+     xlim = c(0,3),
+     breaks = 9,
+     main = "histogram of the virginica specie",
+     xlab = "Virginica Specie",
+     col = "purple")
+```
+
+
+Bivariate distribution using "scatterplot" in a bid to view/visualize the relationship/association between two quantitative variables.
+check out for; linearity, consistent spread, outliers and correlation btw the two variables.
+```{r}
+#between weigtht(wt) and miles per gallon (mpg)
+hist(mtcars$wt)
+hist(mtcars$mpg)
+plot(mtcars$wt, mtcars$mpg, pch = 20,
+     cex = 1.5, #size of things in percentage
+     col= "red",
+     main = paste("MPG as a function of weight"))
+
+```
+
+overlaying plots for the purpose of moderate information density
+```{r}
+#View(lynx)
+hist(lynx,
+     breaks = 14,
+     freq = FALSE,
+     col = "thistle1",
+     main = paste("Histogram of annual canadian lynx", "Trappings, 1821-1934"),#to make the title show on a single line
+     xlab = "Number of lynx Trapped")
+
+#to find out how far the plot is from the normal distribution we use;
+
+curve(dnorm(x, mean(lynx),#use the mean of lynx data
+            sd =sd(lynx)),#standard deviation of lynx
+            col = "thistle4",
+            lwd = 2, #line width of 2 pixels
+            add = TRUE #Allowing superimposition on previous graph
+            )
+#Add kernel density estimators
+lines(density(lynx), col= "red", lwd = 2)
+lines(density(lynx, adjust = 3), col = "purple", lwd = 2)#adjust is used to set the average across
+
+#add a rug plot
+rug(lynx, lwd = 2, col = "gray") #short vertical lines under the plot showing each data point..underlays like a rug hence the name
+```
+Summary function 
+```{r}
+summary(iris$Sepal.Length)
+summary(iris$Species)
+summary(iris)
+```
+
+
+```{r}
+pacman::p_load(pacman, dplyr, GGally, ggplot2, ggthemes, ggvis, httr, lubridate, plotly, rio, rmarkdown, shiny, stringr, tidyr)
+
+```
+using psych's describe() function for quantitative variables only which gives a more precise info about your data; mean, median, skew, vars etc
+```{r}
+p_load(psych) #pacman loads psych
+describe(iris$Sepal.Length) #describes only one quantitative variable
+describe(iris)
+```
+
+Selecting cases using the multiple selectors function... [] is synonymous to 'where'
+
+```{r}
+hist(iris$Petal.Width[iris$Species == "versicolor" & iris$Petal.Width<5.5],main = "Short Petal width for Versicolor")
+#formatting the data frame to hold only setosa specie
+i.setosa<- iris[iris$Species == "setosa",]
+head(i.setosa)
+hist(i.setosa$Petal.Length) # which is same as iris[iris$Species == "setosa",]$Petal.Length
+```
+
+data types(logical>True false,
+numeric>int double single, character, complex, raw) & structures(vectors one or more numbers in 1-dimension of same data type, matrix are two dimensional--same length and same class,
+array> 3 or more dimensional 
+data frame-- 2-dim  ut have variables of diff types but same length and is like a spread sheet,
+list-- most flexible ordered collection of elements of any class, length or structure and can include lists)
+```{r}
+#using rio for r import and export
+#rio::import("data/Data_To_Hourervals_no_filter.csv")
+rio_data<-import("data/Data_To_Hourervals_no_filter.csv")
+
+```
+
+clustering
+```{r}
+#head(mtcars)
+cars<- mtcars[,c(1:4, 6:7, 9:11)] #selecting variables
+head(cars)
+#pipes i.e %>% which takes the result of one step and feeds it into the next...then..
+hc<- cars %>% #get cars
+  dist %>% #compute distance/dissimilarity matrix
+  hclust #compute hierarchical cluster
+plot(hc)
+#add boxes to plot
+rect.hclust(hc, k = 2, border = "gray")
+rect.hclust(hc, k = 3,border = "blue")
+rect.hclust(hc, k = 4,border = "red")
+rect.hclust(hc, k = 5, border = "green4")
+
+
+```
+
+```{r}
+pc<- prcomp(cars,
+            center = TRUE, #Centers means to 0 (optional)
+            scale = TRUE) #Sets unit variance
+summary(pc)
+plot(pc)
+pc
+predict(pc) %>% round(2)# to see how cases load on pc
+biplot(pc) # 2-dimensional plot
+```
+
+
+
+regression using USJudgeRatings data sets
+```{r}
+head(USJudgeRatings)
+data<- USJudgeRatings
+x<- as.matrix(data[-12])
+y<-data[,12]
+```
+
+linear model regression
+```{r}
+reg1<- lm(y~x)
+reg1  #for coefficients only
+summary(reg1)  #inferential test
+anova(reg1) #analysis of variance table
+coef(reg1) #coefficients same as reg1
+confint(reg1)#CI (confience intervals) for coefficients
+resid(reg1)#residual on case-by-case basis
+hist(residuals(reg1))#hstogram to read the residuals
+```
+
+```{r}
+p_load(lars, caret) #least angle regression and classification and regression training
+stepwise<- lars(x,y, type = "stepwise")#conventional stepwise regression
+
+forward <- lars(x, y, type = "forward.stagewise") #like stepwise but with better generalizabilty
+lar<- lars(x, y, type = "lar")# least angle regression
+
+lasso<- lars(x,y ,type = "lasso")#least absolute shrinkage and selection operator
+r2comparison<- c(stepwise$R2[6], forward$R2[6], lar$R2[6], lasso$R2[6])%>%
+  round(2)
+names(r2comparison)<-c("stepwise","forward","lar","lasso")
+r2comparison
+```

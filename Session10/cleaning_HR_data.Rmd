@@ -1,0 +1,47 @@
+---
+title: "HR_DB"
+author: "Joshua Matthew(SCV2021)"
+date: "12/12/2019"
+output: html_document
+---
+
+```{r}
+library(readxl)
+library(dplyr)
+library(tidyverse)
+library(tidyr)
+```
+
+
+```{r}
+RE_DB<-read_xlsx("C:/Users/Josh (Extreme)/Downloads/Data queries RE/RE data query clean.xlsx", skip = 0)
+```
+
+```{r}
+View(RE_DB)
+```
+
+```{r}
+
+RE_BTS<- filter(RE_DB, WO == "BTS")
+RE_Replacement<-filter(RE_DB, WO == "Replacement")
+```
+
+```{r}
+View(RE_BTS)
+```
+
+```{r}
+View(RE_Replacement)
+```
+
+```{r}
+
+RE_BTS_RESTRICTED_LAG<-dplyr::select(RE_BTS, starts_with("IHS"))
+RE_BTS_RESTRICTED_OGU<-dplyr::select(RE_BTS, starts_with("IHS_OGU"))
+RE_BTS_RESTRICTED_ABJ<-dplyr::select(RE_BTS, starts_with("IHS_ABJ"))
+```
+
+```{r}
+View(RE_BTS_RESTRICTED_LAG)
+```

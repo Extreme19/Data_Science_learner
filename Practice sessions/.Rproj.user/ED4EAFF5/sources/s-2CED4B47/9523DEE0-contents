@@ -1,0 +1,22 @@
+---
+title: "KPMG"
+author: "Joshua Matthew(SCV2021)"
+date: "29/01/2020"
+output: word_document
+---
+
+```{r}
+transaction<- read_excel("C:/SEMICOLON/DataBase/Practice/KPMG_VI_New_raw_data_update_final.xlsx", sheet = 2,skip = 1)
+newCstList<- read_excel("C:/SEMICOLON/DataBase/Practice/KPMG_VI_New_raw_data_update_final.xlsx",sheet =3,skip = 1)
+custAddress<- read_excel("C:/SEMICOLON/DataBase/Practice/KPMG_VI_New_raw_data_update_final.xlsx",sheet =4,skip = 1)
+cstDemography<- read_excel("C:/SEMICOLON/DataBase/Practice/KPMG_VI_New_raw_data_update_final.xlsx",sheet =5,skip = 1)
+```
+
+```{r}
+summary(transaction)
+View(transaction)
+View(custAddress)
+View(newCstList)
+View(cstDemography)
+
+```

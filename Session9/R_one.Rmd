@@ -1,0 +1,131 @@
+---
+title: "Cancer Analysis"
+author: "Hamid Abdulsalam"
+date: "27/11/2019"
+output: html_document
+---
+
+```{r}
+library(caret)
+library(rsample)
+library(tidyverse)
+library(pROC)
+```
+
+```{r}
+cnc<-read.csv(file.choose(), header=T)
+```
+
+```{r}
+set.seed(100)
+train_test_split <- initial_split(cnc, prop = 0.8)
+train_test_split
+```
+```{r}
+train_set <- training(train_test_split)
+test_set <- testing(train_test_split)
+```
+
+```{r}
+sapply(cnc, function(x) sum(is.na(x)))
+```
+
+```{r}
+train_set$id<-NULL
+test_set$id<-NULL
+```
+
+```{r}
+control <- trainControl(method="repeatedcv", number=10, repeats=3)
+model <- train(diagnosis~., data=train_set, method="lvq", preProcess="scale", trControl=control)
+importance <- varImp(model, scale=FALSE)
+plot(importance)
+```
+```{r}
+train_new<-train_set[,-c(13,16,20,21)]
+test_new<-test_set[,-c(13,16,20,21)]
+```
+
+```{r}
+control <- trainControl("repeatedcv", number = 10, repeats = 3)
+```
+Logistic Regression
+```{r}
+logis<- train(form=diagnosis~., data=train_new,method="glm", family="binomial", preProcess = c("center", "scale"), trControl=control,tuneLength = 5)
+```
+Surface Vector Machines
+```{r}
+svm<- train(form=diagnosis~., data=train_new, method="svmLinear", preProcess = c("center", "scale"), trControl=control, tuneLength =5)
+```
+Decision Trees
+```{r}
+dct<- train(form=diagnosis~., data=train_new,method="rpart", metric="Accuracy",preProcess = c("center", "scale"),trControl=control, tuneLength = 5)
+```
+
+## Predicting SVM
+```{r}
+predsvm<-predict(svm,test_new,type="raw")
+table(predsvm, test_new$diagnosis)
+```
+
+## Predicting Logistic
+```{r}
+predlog<-predict(logis,test_new,type="raw")
+table(predlog, test_new$diagnosis)
+```
+
+## Predicting Decision Tree
+```{r}
+preddct<-predict(dct,test_new,type="raw")
+table(preddct, test_new$diagnosis)
+```
+
+
+## ROC Curve for Surface Vector Machine
+
+```{r}
+response1 <- predictor1 <- c()
+response1 <- c(response1, test_new$diagnosis)
+predictor1<- c(predictor1,predsvm) 
+
+
+roc1 <- plot.roc(response1, predictor1,  main="ROC for SVM",
+ylab="True Positive Rate",xlab="False Positive Rate", percent=TRUE, col="green") 
+```
+
+## ROC Curve for Decision Tree
+
+```{r}
+response2 <- predictor2 <- c()
+response2 <- c(response2, test_new$diagnosis)
+predictor2 <- c(predictor2, preddct)
+
+roc2 <- plot.roc(response2, predictor2,  main="ROC for DT",
+                 ylab="True Positive Rate",xlab="False Positive Rate", percent=TRUE, col="black")
+
+
+```
+
+## ROC Curve for Logistic Regression
+```{r}
+response4 <- predictor4 <- c()
+response4 <- c(response4, test_new$diagnosis)
+predictor4 <- c(predictor4, predlog)
+
+roc4<- plot.roc(response4, predictor4,  main="ROC for LR",
+                ylab="True Positive Rate",xlab="False Positive Rate", percent=TRUE, col="magenta")
+```
+
+All ROC
+```{r}
+roc1 <- plot.roc(response1, predictor1,  main="ROC for SVM, LR and DT",
+ylab="True Positive Rate",xlab="False Positive Rate", percent=TRUE, col="green") 
+par(new=TRUE)
+roc2 <- plot.roc(response2, predictor2,  main="ROC for SVM, LR and DT",
+                 ylab="True Positive Rate",xlab="False Positive Rate", percent=TRUE, col="black")
+par(new=TRUE)
+roc4<- plot.roc(response4, predictor4,  main="ROC for SVM, LR and DT",
+                ylab="True Positive Rate",xlab="False Positive Rate", percent=TRUE, col="magenta")
+
+legend("bottomright", legend = c("SVM", "LR",'DT'), col = c("green", "black", "magenta"),lwd = 2)
+```

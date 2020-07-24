@@ -1,0 +1,31 @@
+---
+title: "R Assignment"
+author: "Joshua Matthew(SCV2021)"
+date: "12/10/2019"
+output: pdf_document
+---
+
+
+```{r}
+library(readr)
+library(haven)
+library(readxl)
+```
+
+```{r}
+diamonds<-read.csv("data/diamond.csv", header = T)
+```
+
+```{r}
+diamonds
+
+```
+
+```{r}
+plot(diamonds$depth, diamonds$price, main = "Plot of price against depth", xlab = "depth", ylab = "price")
+```
+
+```{r}
+hist(diamonds$price, main = "Histogram plot of the Price of Diamonds", xlab = "Price", ylab = "Frequency of Price")
+
+```

@@ -1,0 +1,33 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1580341287765.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "BCBFDEB9",
+    "lastKnownWriteTime" : 8104338726696264226,
+    "last_content_update" : 1580341287765,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "2C3E67C3",
+        "caption" : "cstDemography",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=cstDemography&cache_key=2C3E67C3",
+        "displayedObservations" : "3999",
+        "environment" : "",
+        "expression" : "cstDemography",
+        "object" : "cstDemography",
+        "preview" : "0",
+        "totalObservations" : "3999",
+        "variables" : "6"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

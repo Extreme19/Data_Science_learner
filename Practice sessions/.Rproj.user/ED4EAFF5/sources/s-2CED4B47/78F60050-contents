@@ -1,0 +1,219 @@
+---
+title: "Lecture2"
+author: "Josh"
+date: "10/10/2019"
+output: pdf_document
+---
+
+#use choose.file() to load a folder and select a specific file  or use data/file_path to load the file directly into rmd
+```{r}
+who <- read.table("data/who_suicide_statistics.csv",header = T, sep = ",")
+who2 <- read.table("data/who_suicide_statistics_semi.csv",header = T, sep = ";")
+
+
+```
+
+```{r}
+autoData <- read.table("data/auto.txt",header = T, sep = ",")
+```
+
+```{r}
+View(who)
+View(who2)
+```
+
+
+```{r}
+names(autoData) <- c("sym","norm","make","f_type","asp","num_doors","body_style","drive_wheel","engine_loc","wheel_base","length","width","height","curb_weight","engine_type","num_cyl","eng_size","fuel_type","bore","stroke","comp","horse","peak_rpm","city_mpg","highway","price")
+#naming the columns (header)
+# using $ for referencing
+```
+
+```{r}
+View(autoData)
+```
+
+```{r}
+length(autoData)
+```
+
+```{r}
+potato1 <- read.table("data/potatoes.txt",header = T, sep = "\t")
+```
+
+```{r}
+View(potato1)
+```
+
+#load the package  readr for csv by using read_extension
+```{r}
+library(readr)
+```
+
+```{r}
+home<- read_csv(file.choose(), col_names = T)
+```
+
+```{r}
+View(home)
+```
+
+#load the package to read excel files
+```{r}
+library(readxl)
+```
+to read an excel file in distinct sheets
+```{r}
+
+excel1<- read_excel("data/Employees.xlsx", sheet = 1)
+```
+
+```{r}
+excel2<- read_excel("data/Employees.xlsx", sheet = 2)
+
+```
+
+```{r}
+View(excel1)
+```
+
+```{r}
+excel2
+```
+
+using row function 'head'(first 6) and 'tail'(last 6 rows)
+also specifying distinct columns using vectors i.e c()
+```{r}
+head(autodata[,1:4])
+```
+
+```{r}
+tail(autoData[, c(1,3,5)])
+```
+
+loading the DBI for database connection
+```{r}
+library(DBI)
+library(RMySQL)
+```
+
+connecting the cloud host through R
+
+```{r}
+connect<- dbConnect(RMySQL::MySQL(), dbname = "tweater", host = "courses.csrrinzqubik.us-east-1.rds.amazonaws.com", port = 3306, user = 'student', password = 'datacamp')
+```
+
+
+connecting MySQL local host to R
+```{r}
+cape_codd<- dbConnect(RMySQL::MySQL(), dbname = "cape_codd", host = "127.0.0.1", port = 3306, user = 'root', password = 'Adeniyi96@123')
+```
+
+
+store all tables in the connected database in variable 'tables'
+```{r}
+tables<- dbListTables(connect)
+```
+to view  a list of all tables in the database 'connect'
+
+```{r}
+tables
+```
+to select distinct table into a specified variable
+```{r}
+user_tables<- dbReadTable(connect,"users")
+
+```
+
+to view user_tables
+```{r}
+View(user_tables)
+```
+to extract 'comment' table from 'tables'
+```{r}
+user_comments<- dbReadTable(connect,"comments")
+users<-dbReadTable(connect, "users")
+```
+
+
+
+to view users also user_comments
+```{r}
+users
+View(users)
+user_comments
+
+```
+to export or save a table in R as a csv file
+```{r}
+write.csv(user_comments, file = "userComments.csv")
+```
+to save as txt file or csv
+```{r}
+write.table(users, file = "users.txt")
+write.csv(users, file = "users.csv")
+```
+
+```{r}
+houses<-read.csv("https://factual.ng/training/house.csv", header = T)
+```
+
+```{r}
+View(houses)
+```
+using package 'haven'
+```{r}
+library(haven)
+```
+saving a dta (stata file) 'alcohol' as 'd_ta'
+```{r}
+d_ta<- read_dta("data/alcohol.dta")
+```
+viewing the saved d_ta file
+```{r}
+View(d_ta)
+
+```
+using 'str' to view its structure
+```{r}
+str(d_ta)
+```
+
+to load csv file (house) as 'scat' for scattered plots; used for continuous variables not categorical varibles.
+```{r}
+scat<-read.csv("data/house.csv", header = T)
+```
+
+
+```{r}
+View(scat)
+```
+to plot two variables, using the '$' and formatting the plot with 'main', 'ylab', 'xlab'
+```{r}
+
+BathroomPrice<-plot(scat$Bathrooms, scat$Price, main = "Relationship btw Bathroom and Price",xlab = "Bathroom",ylab = "Pricing")
+write.csv(BathroomPrice, file = "bathroom")
+```
+
+```{r}
+hist( log(scat$Price),xlab = "Price", main = "Histogram of Price")
+```
+
+
+```{r}
+hist(scat$SQFT, xlab = "Location", main = "Histogram of Price")
+```
+
+
+
+
+Assignment:
+Load the diamond data set into R. Plot the scatter plot of the variables "price" and "depth", with Price on the y-axis and depth on the x-axis.
+Format your plot by putting title on the plot.
+Label your X-axis and Y-axis as well.
+
+carry out histogram of the "price" variable and the Title your plots accordingly.
+
+hamid@factual.ng
+```{r}
+``

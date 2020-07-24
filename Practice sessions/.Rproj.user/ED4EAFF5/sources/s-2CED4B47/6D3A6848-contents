@@ -1,0 +1,189 @@
+---
+title: "THird session"
+author: "Joshua Matthew(SCV2021)"
+date: "17/10/2019"
+output: pdf_document
+---
+
+```{r}
+library(tidyverse)
+library(readr)
+library(readxl)
+#library(hflights)
+
+```
+
+Hey!
+#Tidyverse functions:
+--gather(range of columns to be gathered, key = column where they exist, value = the values they should reference)
+--seperate
+--spread
+
+
+we'll be looking into data manipulation and transformation 
+import the excel file 'mbta.xlsx' and assign it to a variable 'New_dta'
+
+```{r}
+New_dta<-read_excel("data/mbta.xlsx", skip = 1, range =  cell_cols(2:60))
+
+```
+
+```{r}
+View(New_dta)
+New_dta
+```
+
+the gather function transforms/transposes multiple columns into one
+% means then. > means next action. 
+key is a keyword for renaming the column being transformed and 'value' assigns name to the column holding the 'year's' corresponding values.
+```{r}
+New_dta_tidy<- New_dta%>%gather( '2007-01' : '2011-10', key = "year", value = "passenger")
+```
+
+```{r}
+View(New_dta_tidy)
+```
+
+```{r}
+New_dta_tidy[(1:20),c(1,3)]
+```
+
+using the separate function to distinguish year from month in the  gathered table 'New_dta_tidy'
+```{r}
+New_dta_tidySep<-New_dta_tidy%>%separate(year, into = c("Year","Month"))
+```
+
+```{r}
+View(New_dta_tidySep)
+```
+
+spread is the opposite of gather as it opens a column's rows into columns
+the first argument is the column to be spread and the second argument is the column whose value will spread accross the first argument
+```{r}
+New_dta_tidySpread<- New_dta_tidySep %>%spread(mode, passenger)
+```
+
+```{r}
+View(New_dta_tidySpread)
+```
+
+to now select columns of interest from the spread data
+```{r}
+Some_cols<-New_dta_tidySpread%>%.[,c(1,2,6,7,8)]
+```
+cols of interest :year, month, commuter rail, light rail and heavy rail
+```{r}
+View(Some_cols)
+```
+
+gather the last 3 cols into a column named 'rails' against a value 'passenger'
+```{r}
+Some_cols_gather<-Some_cols%>%gather('Commuter Rail':'Light Rail', key = "all_rails", value = "passenger" )
+```
+
+```{r}
+view(Some_cols_gather)
+#to plot two selected columns
+toplot<-Some_cols_gather[1:58,]
+plotted<-plot(toplot$Month, toplot$passenger, main = "Months over passengers", xlab = "months", ylab = "passengers")
+
+```
+
+```{r}
+library(dplyr)
+data("hflights")
+view(hflights)
+
+```
+
+DPLYR functions:
+--filter
+#the dplyr 'filter' function selects the rows that meets the set conditions. eg.  filter(table_name, criteria1 == "criteria value", criteria2 == "criteria2 value")
+-- between== 
+-- arrange== arrange(table name, column, column) asc by default
+-- select==  select(table name, column lits to be view seperated by comma)
+            --select has functions which can rename a column but will not pull other unrenamed columns in its result.
+            --select can specify 'starts_with("keyword's first letters"))
+
+
+to use the filter function on hflight data
+```{r}
+flights<- hflights
+filteredFlights<- filter(flights, Year== 2011, Month == 3, Dest == "MIA")
+filteredFlights
+```
+
+to filter data from the column only when the values in the column meets a criteria.
+```{r}
+new_filteredDest<- filter(flights, Dest%in%c("FLL", "MIA"))
+new_filteredDest
+```
+
+to use the 'between' with the filter function function 
+filter(tableName, between(ColumnToBeFiltered, left-initial,right-final))[]
+```{r}
+flightRange<- filter(flights, between(Distance, 224, 944))[2300:2310,11:16]
+flightRange
+```
+
+
+
+exercise: find all flights that 
+-a; departed in april 2011
+-b; operated by AA and WN
+```{r}
+View(flights)
+```
+
+```{r}
+aprilFlight<-filter(flights, Year== 2011, Month==4, UniqueCarrier%in%c("AA","WN"))
+view(aprilFlight)
+```
+
+to arrange the data set based on columns
+
+```{r}
+arrangedData<- arrange(aprilFlight,Year, desc(DepTime))
+View(arrangedData)
+
+```
+
+to use the dplyr's select function to select specific columns
+```{r}
+selected<- dplyr::select(arrangedData, Year,DepTime, Month)[1:10,]
+View(selected)
+```
+
+select and rename specific columns
+```{r}
+view(dplyr::select(arrangedData, newYear = Year, newMonth = Month))
+
+```
+
+to rename a set of columns
+```{r}
+view(rename(arrangedData, newYear = Year, Destination = Dest))
+```
+to search in the select function
+```{r}
+view(dplyr::select(arrangedData, starts_with("Dep"), ends_with("arr")))
+```
+using one_of function with select statement
+```{r}
+joe<- c("Year","Month","DayOfMonth","ArrTime")
+shua<-dplyr:: select(flights, one_of(joe))
+head(shua)
+```
+
+using the mutate function
+```{r}
+calc<-flights%>%dplyr::select(ends_with("Delay"),Distance,AirTime)%>%
+  mutate(time_gain = ArrDelay - DepDelay, speed = Distance/AirTime *60)
+calc
+```
+
+to summarise and sum an individual column
+
+```{r}
+View(summarise(flights,Delay =sum(DepDelay, na.rm = TRUE))
+```

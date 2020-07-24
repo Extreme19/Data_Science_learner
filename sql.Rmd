@@ -1,0 +1,45 @@
+---
+title: "Cape_Codd"
+author: "Joshua Matthew(SCV2021)"
+date: "17/10/2019"
+output: pdf_document
+---
+
+connecting MySQL local host to R
+```{r}
+cape_codd<- dbConnect(RMySQL::MySQL(), dbname = "cape_codd", host = "127.0.0.1", port = 3306, user = 'root', password = 'Adeniyi96@123')
+```
+
+```{r}
+sakila<- dbConnect(RMySQL::MySQL(), dbname = "sakila", host = "127.0.0.1", port = 3306, user = 'root', password = 'Adeniyi96@123')
+```
+
+
+```{r}
+CapeTables<- dbListTables(cape_codd)
+```
+
+```{r}
+CapeTables
+```
+
+```{r}
+dbListObjects(cape_codd, prefix = 'buyer')
+```
+
+```{r}
+Buyers<- dbReadTable(cape_codd, "buyer")
+Catalog_SKU_2016<- dbReadTable(cape_codd, "catalog_sku_2016")
+Catalog_SKU_2017<- dbReadTable(cape_codd, "catalog_sku_2017")
+Catalog_SKU_2018<- dbReadTable(cape_codd, "catalog_sku_2018")
+inventory<- dbReadTable(cape_codd, "inventory")
+order_item<- dbReadTable(cape_codd, "order_item")
+retail_order<- dbReadTable(cape_codd, "retail_order")
+sku_data<- dbReadTable(cape_codd, "sku_data")
+warehouse<- dbReadTable(cape_codd, "warehouse")
+
+```
+
+```{r}
+
+```

@@ -1,0 +1,737 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Cancer Analysis},
+            pdfauthor={Joshua Matthew},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Cancer Analysis}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Joshua Matthew}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{5/12/2019}
+
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(caret)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: lattice
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: ggplot2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(rsample)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: tidyr
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching packages -------------------------------------- tidyverse 1.2.1 --
+\end{verbatim}
+
+\begin{verbatim}
+## v tibble  2.1.3     v dplyr   0.8.3
+## v readr   1.3.1     v stringr 1.4.0
+## v purrr   0.3.2     v forcats 0.4.0
+\end{verbatim}
+
+\begin{verbatim}
+## -- Conflicts ----------------------------------------- tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+## x purrr::lift()   masks caret::lift()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(pROC)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Type 'citation("pROC")' for a citation.
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'pROC'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     cov, smooth, var
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cnc<-}\KeywordTok{read.csv}\NormalTok{(}\StringTok{"data/cancer.csv"}\NormalTok{, }\DataTypeTok{header=}\NormalTok{T)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{100}\NormalTok{)}
+\NormalTok{train_test_split <-}\StringTok{ }\KeywordTok{initial_split}\NormalTok{(cnc, }\DataTypeTok{prop =} \FloatTok{0.8}\NormalTok{)}
+\NormalTok{train_test_split}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## <456/113/569>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train_set <-}\StringTok{ }\KeywordTok{training}\NormalTok{(train_test_split)}
+\NormalTok{test_set <-}\StringTok{ }\KeywordTok{testing}\NormalTok{(train_test_split)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sapply}\NormalTok{(cnc, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{sum}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(x)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                      id               diagnosis             radius_mean 
+##                       0                       0                       0 
+##            texture_mean          perimeter_mean               area_mean 
+##                       0                       0                       0 
+##         smoothness_mean        compactness_mean          concavity_mean 
+##                       0                       0                       0 
+##     concave.points_mean           symmetry_mean  fractal_dimension_mean 
+##                       0                       0                       0 
+##               radius_se              texture_se            perimeter_se 
+##                       0                       0                       0 
+##                 area_se           smoothness_se          compactness_se 
+##                       0                       0                       0 
+##            concavity_se       concave.points_se             symmetry_se 
+##                       0                       0                       0 
+##    fractal_dimension_se            radius_worst           texture_worst 
+##                       0                       0                       0 
+##         perimeter_worst              area_worst        smoothness_worst 
+##                       0                       0                       0 
+##       compactness_worst         concavity_worst    concave.points_worst 
+##                       0                       0                       0 
+##          symmetry_worst fractal_dimension_worst 
+##                       0                       0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train_set}\OperatorTok{$}\NormalTok{id<-}\OtherTok{NULL}
+\NormalTok{test_set}\OperatorTok{$}\NormalTok{id<-}\OtherTok{NULL}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{control <-}\StringTok{ }\KeywordTok{trainControl}\NormalTok{(}\DataTypeTok{method=}\StringTok{"repeatedcv"}\NormalTok{, }\DataTypeTok{number=}\DecValTok{10}\NormalTok{, }\DataTypeTok{repeats=}\DecValTok{3}\NormalTok{)}
+\NormalTok{model <-}\StringTok{ }\KeywordTok{train}\NormalTok{(diagnosis}\OperatorTok{~}\NormalTok{., }\DataTypeTok{data=}\NormalTok{train_set, }\DataTypeTok{method=}\StringTok{"lvq"}\NormalTok{, }\DataTypeTok{preProcess=}\StringTok{"scale"}\NormalTok{, }\DataTypeTok{trControl=}\NormalTok{control)}
+\NormalTok{importance <-}\StringTok{ }\KeywordTok{varImp}\NormalTok{(model, }\DataTypeTok{scale=}\OtherTok{FALSE}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(importance)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{R_one_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train_new<-train_set[,}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{13}\NormalTok{,}\DecValTok{16}\NormalTok{,}\DecValTok{20}\NormalTok{,}\DecValTok{21}\NormalTok{)]}
+\NormalTok{test_new<-test_set[,}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{13}\NormalTok{,}\DecValTok{16}\NormalTok{,}\DecValTok{20}\NormalTok{,}\DecValTok{21}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{control <-}\StringTok{ }\KeywordTok{trainControl}\NormalTok{(}\StringTok{"repeatedcv"}\NormalTok{, }\DataTypeTok{number =} \DecValTok{10}\NormalTok{, }\DataTypeTok{repeats =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Logistic Regression
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{logis<-}\StringTok{ }\KeywordTok{train}\NormalTok{(}\DataTypeTok{form=}\NormalTok{diagnosis}\OperatorTok{~}\NormalTok{., }\DataTypeTok{data=}\NormalTok{train_new,}\DataTypeTok{method=}\StringTok{"glm"}\NormalTok{, }\DataTypeTok{family=}\StringTok{"binomial"}\NormalTok{, }\DataTypeTok{preProcess =} \KeywordTok{c}\NormalTok{(}\StringTok{"center"}\NormalTok{, }\StringTok{"scale"}\NormalTok{), }\DataTypeTok{trControl=}\NormalTok{control,}\DataTypeTok{tuneLength =} \DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: algorithm did not converge
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+\end{verbatim}
+
+Surface Vector Machines
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{svm<-}\StringTok{ }\KeywordTok{train}\NormalTok{(}\DataTypeTok{form=}\NormalTok{diagnosis}\OperatorTok{~}\NormalTok{., }\DataTypeTok{data=}\NormalTok{train_new, }\DataTypeTok{method=}\StringTok{"svmLinear"}\NormalTok{, }\DataTypeTok{preProcess =} \KeywordTok{c}\NormalTok{(}\StringTok{"center"}\NormalTok{, }\StringTok{"scale"}\NormalTok{), }\DataTypeTok{trControl=}\NormalTok{control, }\DataTypeTok{tuneLength =}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Decision Trees
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dct<-}\StringTok{ }\KeywordTok{train}\NormalTok{(}\DataTypeTok{form=}\NormalTok{diagnosis}\OperatorTok{~}\NormalTok{., }\DataTypeTok{data=}\NormalTok{train_new,}\DataTypeTok{method=}\StringTok{"rpart"}\NormalTok{, }\DataTypeTok{metric=}\StringTok{"Accuracy"}\NormalTok{,}\DataTypeTok{preProcess =} \KeywordTok{c}\NormalTok{(}\StringTok{"center"}\NormalTok{, }\StringTok{"scale"}\NormalTok{),}\DataTypeTok{trControl=}\NormalTok{control, }\DataTypeTok{tuneLength =} \DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{predicting-svm}{%
+\subsection{Predicting SVM}\label{predicting-svm}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{predsvm<-}\KeywordTok{predict}\NormalTok{(svm,test_new,}\DataTypeTok{type=}\StringTok{"raw"}\NormalTok{)}
+\KeywordTok{table}\NormalTok{(predsvm, test_new}\OperatorTok{$}\NormalTok{diagnosis)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        
+## predsvm  B  M
+##       B 71  5
+##       M  1 36
+\end{verbatim}
+
+\hypertarget{predicting-logistic}{%
+\subsection{Predicting Logistic}\label{predicting-logistic}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{predlog<-}\KeywordTok{predict}\NormalTok{(logis,test_new,}\DataTypeTok{type=}\StringTok{"raw"}\NormalTok{)}
+\KeywordTok{table}\NormalTok{(predlog, test_new}\OperatorTok{$}\NormalTok{diagnosis)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        
+## predlog  B  M
+##       B 67  4
+##       M  5 37
+\end{verbatim}
+
+\hypertarget{predicting-decision-tree}{%
+\subsection{Predicting Decision Tree}\label{predicting-decision-tree}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{preddct<-}\KeywordTok{predict}\NormalTok{(dct,test_new,}\DataTypeTok{type=}\StringTok{"raw"}\NormalTok{)}
+\KeywordTok{table}\NormalTok{(preddct, test_new}\OperatorTok{$}\NormalTok{diagnosis)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        
+## preddct  B  M
+##       B 66  6
+##       M  6 35
+\end{verbatim}
+
+\hypertarget{roc-curve-for-surface-vector-machine}{%
+\subsection{ROC Curve for Surface Vector
+Machine}\label{roc-curve-for-surface-vector-machine}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{response1 <-}\StringTok{ }\NormalTok{predictor1 <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+\NormalTok{response1 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(response1, test_new}\OperatorTok{$}\NormalTok{diagnosis)}
+\NormalTok{predictor1<-}\StringTok{ }\KeywordTok{c}\NormalTok{(predictor1,predsvm) }
+
+
+\NormalTok{roc1 <-}\StringTok{ }\KeywordTok{plot.roc}\NormalTok{(response1, predictor1,  }\DataTypeTok{main=}\StringTok{"ROC for SVM"}\NormalTok{,}
+\DataTypeTok{ylab=}\StringTok{"True Positive Rate"}\NormalTok{,}\DataTypeTok{xlab=}\StringTok{"False Positive Rate"}\NormalTok{, }\DataTypeTok{percent=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{col=}\StringTok{"green"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Setting levels: control = 1, case = 2
+\end{verbatim}
+
+\begin{verbatim}
+## Setting direction: controls < cases
+\end{verbatim}
+
+\includegraphics{R_one_files/figure-latex/unnamed-chunk-16-1.pdf}
+
+\hypertarget{roc-curve-for-decision-tree}{%
+\subsection{ROC Curve for Decision
+Tree}\label{roc-curve-for-decision-tree}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{response2 <-}\StringTok{ }\NormalTok{predictor2 <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+\NormalTok{response2 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(response2, test_new}\OperatorTok{$}\NormalTok{diagnosis)}
+\NormalTok{predictor2 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(predictor2, preddct)}
+
+\NormalTok{roc2 <-}\StringTok{ }\KeywordTok{plot.roc}\NormalTok{(response2, predictor2,  }\DataTypeTok{main=}\StringTok{"ROC for DT"}\NormalTok{,}
+                 \DataTypeTok{ylab=}\StringTok{"True Positive Rate"}\NormalTok{,}\DataTypeTok{xlab=}\StringTok{"False Positive Rate"}\NormalTok{, }\DataTypeTok{percent=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{col=}\StringTok{"black"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Setting levels: control = 1, case = 2
+\end{verbatim}
+
+\begin{verbatim}
+## Setting direction: controls < cases
+\end{verbatim}
+
+\includegraphics{R_one_files/figure-latex/unnamed-chunk-17-1.pdf}
+
+\hypertarget{roc-curve-for-logistic-regression}{%
+\subsection{ROC Curve for Logistic
+Regression}\label{roc-curve-for-logistic-regression}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{response4 <-}\StringTok{ }\NormalTok{predictor4 <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+\NormalTok{response4 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(response4, test_new}\OperatorTok{$}\NormalTok{diagnosis)}
+\NormalTok{predictor4 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(predictor4, predlog)}
+
+\NormalTok{roc4<-}\StringTok{ }\KeywordTok{plot.roc}\NormalTok{(response4, predictor4,  }\DataTypeTok{main=}\StringTok{"ROC for LR"}\NormalTok{,}
+                \DataTypeTok{ylab=}\StringTok{"True Positive Rate"}\NormalTok{,}\DataTypeTok{xlab=}\StringTok{"False Positive Rate"}\NormalTok{, }\DataTypeTok{percent=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{col=}\StringTok{"magenta"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Setting levels: control = 1, case = 2
+\end{verbatim}
+
+\begin{verbatim}
+## Setting direction: controls < cases
+\end{verbatim}
+
+\includegraphics{R_one_files/figure-latex/unnamed-chunk-18-1.pdf}
+
+All ROC
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{roc1 <-}\StringTok{ }\KeywordTok{plot.roc}\NormalTok{(response1, predictor1,  }\DataTypeTok{main=}\StringTok{"ROC for SVM, LR and DT"}\NormalTok{,}
+\DataTypeTok{ylab=}\StringTok{"True Positive Rate"}\NormalTok{,}\DataTypeTok{xlab=}\StringTok{"False Positive Rate"}\NormalTok{, }\DataTypeTok{percent=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{col=}\StringTok{"green"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Setting levels: control = 1, case = 2
+\end{verbatim}
+
+\begin{verbatim}
+## Setting direction: controls < cases
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{new=}\OtherTok{TRUE}\NormalTok{)}
+\NormalTok{roc2 <-}\StringTok{ }\KeywordTok{plot.roc}\NormalTok{(response2, predictor2,  }\DataTypeTok{main=}\StringTok{"ROC for SVM, LR and DT"}\NormalTok{,}
+                 \DataTypeTok{ylab=}\StringTok{"True Positive Rate"}\NormalTok{,}\DataTypeTok{xlab=}\StringTok{"False Positive Rate"}\NormalTok{, }\DataTypeTok{percent=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{col=}\StringTok{"black"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Setting levels: control = 1, case = 2
+## Setting direction: controls < cases
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{new=}\OtherTok{TRUE}\NormalTok{)}
+\NormalTok{roc4<-}\StringTok{ }\KeywordTok{plot.roc}\NormalTok{(response4, predictor4,  }\DataTypeTok{main=}\StringTok{"ROC for SVM, LR and DT"}\NormalTok{,}
+                \DataTypeTok{ylab=}\StringTok{"True Positive Rate"}\NormalTok{,}\DataTypeTok{xlab=}\StringTok{"False Positive Rate"}\NormalTok{, }\DataTypeTok{percent=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{col=}\StringTok{"magenta"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Setting levels: control = 1, case = 2
+## Setting direction: controls < cases
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{legend}\NormalTok{(}\StringTok{"bottomright"}\NormalTok{, }\DataTypeTok{legend =} \KeywordTok{c}\NormalTok{(}\StringTok{"SVM"}\NormalTok{, }\StringTok{"LR"}\NormalTok{,}\StringTok{'DT'}\NormalTok{), }\DataTypeTok{col =} \KeywordTok{c}\NormalTok{(}\StringTok{"green"}\NormalTok{, }\StringTok{"black"}\NormalTok{, }\StringTok{"magenta"}\NormalTok{),}\DataTypeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{R_one_files/figure-latex/unnamed-chunk-19-1.pdf}
+
+
+\end{document}

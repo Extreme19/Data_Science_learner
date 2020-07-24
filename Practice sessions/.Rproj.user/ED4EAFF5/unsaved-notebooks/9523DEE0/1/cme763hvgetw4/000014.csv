@@ -1,0 +1,11 @@
+"0","transaction<- read_excel(""C:/SEMICOLON/DataBase/Practice/KPMG_VI_New_raw_data_update_final.xlsx"", sheet = 2,skip = 1)"
+"0","newCstList<- read_excel(""C:/SEMICOLON/DataBase/Practice/KPMG_VI_New_raw_data_update_final.xlsx"",sheet =3,skip = 1)"
+"2","New names:
+* `` -> ...17
+* `` -> ...18
+* `` -> ...19
+* `` -> ...20
+* `` -> ...21
+"
+"0","custAddress<- read_excel(""C:/SEMICOLON/DataBase/Practice/KPMG_VI_New_raw_data_update_final.xlsx"",sheet =4,skip = 1)"
+"0","cstDemography<- read_excel(""C:/SEMICOLON/DataBase/Practice/KPMG_VI_New_raw_data_update_final.xlsx"",sheet =5,skip = 1)"

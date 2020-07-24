@@ -1,0 +1,44 @@
+---
+title: "Linear Regression"
+author: "Joshua Matthew(SCV2021)"
+date: "14/11/2019"
+output: pdf_document
+---
+create a data frame
+```{r}
+dn<- data.frame(Age = c(40,27,52,31,45), Weight = c(61,68,50,47,51))
+dn
+
+```
+for the lm (linear modelling) function
+```{r}
+new_dn<- lm(Age~Weight, data = dn)
+summary(new_dn)
+```
+
+```{r}
+x<-c(5.6,151.2,-70.2,67.2,-26.4)
+```
+
+```{r}
+plot(new_dn$effects)
+```
+predicting age based on weight data
+```{r}
+predicted_age<-predict.lm(new_dn)
+predicted_age
+```
+
+```{r}
+data("iris")
+fix("iris")
+```
+
+```{r}
+library(dplyr)
+library(ggplot)
+```
+
+```{r}
+ggplot
+```

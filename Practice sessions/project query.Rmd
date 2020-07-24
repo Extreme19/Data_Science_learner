@@ -1,0 +1,36 @@
+---
+title: "project query"
+author: "Joshua Matthew(COO-Project support)"
+date: "19/07/2020"
+output: html_document
+---
+
+```{r}
+library(dplyr)
+library(tidyverse)
+library(readxl)
+```
+
+```{r}
+project<- read_excel("C:\\Users\\Josh (Extreme)\\Downloads\\Project query.xlsx", skip= 0)
+```
+```{r}
+View(project)
+```
+
+```{r}
+IHS_ID<- project%>%.[,14]
+```
+
+```{r}
+IHS_ID
+```
+
+```{r}
+filtered_project<- dplyr::filter(project, project$IHS_Site_ID_updated==IHS_ID)
+```
+
+```{r}
+#filtered_project
+View(filtered_project)
+```

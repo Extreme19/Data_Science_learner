@@ -1,0 +1,136 @@
+---
+title: "saturday class"
+author: "Joshua Matthew(SCV2021)"
+date: "22/02/2020"
+output: html_document
+---
+
+creating a mean function
+```{r}
+meanCal<- function(x){
+  n<-length(x)
+  meanX<-sum(x)/n
+  #return(meanX)
+  return(list(data=x,mean=meanX))
+}
+
+
+
+```
+
+```{r}
+x<- c(1,2,4,5,6)
+
+meanCal(x)
+```
+
+```{r}
+# Lotto
+lotto <- function(x) {
+# x ... draw 6 numbers randomly
+numbers <- sample(x = 1:45, size = 6, replace = FALSE)
+# how many correct guesses
+correct <- sum(x %in% numbers)
+# return list invisibly
+#return(list(guess = correct, numbers = sort(numbers)))
+return(invisible(list(guess = correct, numbers = sort(numbers))))#for result to only display if the funtion call is assigned to ann object
+}
+```
+
+```{r}
+set.seed(112)
+lotto(x=c(6,10,24,32,41,44))
+```
+
+```{r}
+lotto <- function(x, print.out = FALSE) { #the baseR function print.out can replace function invisible
+  # x ... draw 6 numbers randomly
+numbers <- sample(x = 1:45, size = 6, replace = FALSE)
+# how many correct guesses
+correct <- sum(x %in% numbers)
+
+# text output only if print.out is TRUE
+if (print.out == TRUE) {
+  cat("You have", correct, "correct guess(es)", sep = " ")
+}
+else{
+  return(invisible(list(guess=correct, numbers = sort(numbers))))
+}
+}
+```
+test
+```{r}
+set.seed(112)
+lotto(x=c(20,61,34,44,23,90), print.out = TRUE)
+```
+
+to validate input
+```{r}
+lotto <- function(x, print.out = FALSE) { #the baseR function print.out can replace function invisible
+  # x ... draw 6 numbers randomly
+  if(length(x)==6){
+    numbers <- sample(x = 1:45, size = 6, replace = FALSE)
+    # how many correct guesses
+    correct <- sum(x %in% numbers)
+    
+    # text output only if print.out is TRUE
+    if (print.out == TRUE) {
+      cat("You have", correct, "correct guess(es)", sep = " ")
+    }
+    else{
+      return(invisible(list(guess=correct, numbers = sort(numbers))))
+    }
+  }
+  else{
+    stop("the vector size must be 6")#stops the app from running, to show the error with a specified message
+  }
+}
+```
+
+test
+```{r}
+set.seed(112)
+lotto(x=c(20,61,34,44,23), print.out = TRUE)
+```
+
+ifelse() is a tenary operation like in java{if(? :)}
+```{r}
+plot(x=iris$Sepal.Length, y=iris$Petal.Width,
+     pch =19,
+     col= ifelse(iris$Species == "setosa","blue",
+                 ifelse(iris$Species=="versicolor", "red","green")),
+     xlab = "Sepal length",
+     ylab= "petal width")
+
+```
+
+
+Loops-----------------
+
+for loops. using the fuction lotto() n-times
+Numeric(length(n)) creates a vector of n-zeros
+```{r}
+mult_lotto <- function(n, x) {
+# prepare (initialize) objects for results
+correct_guesses <- numeric(length = n)
+drawn_numbers <- matrix(NA, nrow = n, ncol = 6)
+# repeat for n times
+for (i in 1:n) {
+# one Lotto game
+one_draw <- lotto(x = x, print.out = FALSE)
+# save single results in position/row i
+correct_guesses[i] <- one_draw$guess
+drawn_numbers[i, ] <- one_draw$numbers
+}
+# return results as list
+return(invisible(list(guess = correct_guesses,
+numbers = drawn_numbers)))
+}
+```
+
+test
+```{r}
+set.seed(145)
+result<-mult_lotto(5,x=c(23,45,14,12,6,34))
+result
+```
